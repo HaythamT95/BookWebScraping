@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="icon" href="data:,">
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/css/style.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.1.0/bootstrap-4.1.0.jar/css/bootstrap.min.css" media="screen"/>
+
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script type="text/javascript">
+	function clearSearch() {
+		window.location = "[[@{/}]]";
+	}
+</script>
+<script type="text/javascript">
+$(function(){
+	$("#keyword").autocomplete({
+		source : "AutoCompleteSearch",
+		minLength: 2,
+	});
+});
+	
+</script>
+<title>Open Library</title>
+</head>
+<body>
+	<h1>Welcome to the open library</h1>
+	<form th:action="@{/search}" style="text-align:center">
+		   <strong 	style="font-size: 24px">Search</strong>  <input type="text" name="keyword" id="keyword" size="50"
+			th:value="${keyword}" required /> 
+			
+			<input type="submit" value="Search" id="btnSearch"/>
+			<input type="button" value="Clear" id="btnClear" onclick="clearSearch()"/>
+	</form>
+
+	<table class="styled-table" border="1">
+		<thead>
+			<tr>
+				<th>Serial Number</th>
+				<th>Book Name</th>
+				<th>Author</th>
+				<th>Cover</th>
+				<th>Link</th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr th:each="book:${list}" class="active-row">
+			<td th:text="${book.ID}"></td>
+			<td th:text="${book.name}"></td>
+			<td th:text="${book.author}"></td>
+			<td><img
+				th:src="@{'data:image/jpeg;base64,'+${book.imageBase64}}"
+				style="width: 150px; height: 200px" /></td>
+			<td><a th:href="@{|/download?id=${book.ID}|}">Download</a></td>
+		</tr>
+		</tbody>
+	</table>
+	<!--  -->
+	<footer>
+		<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+        <a th:if="${i == 1}" th:href="@{'/'}">[[${i}]]</a>
+        <a th:if="${i > 1}" th:href="@{'/' + ${i}}">[[${i}]]</a>
+		</span>
+	</footer>
+</body>
+</html>
