@@ -8,3 +8,5 @@ After collecting some books from part 1, this software connects to the database 
 "https://openlibrary.org/".
 
 User can download the book to its own device and read the book. Also I added searching functionality with autocomplete.
+
+**For part 1 please click this link**: https://github.com/HaythamT95/BookScraping.git
